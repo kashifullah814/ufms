@@ -1,0 +1,7 @@
+# includes/ sirf PHP ke andar se load hota hai - browser se na khule
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Deny from all
+</IfModule>

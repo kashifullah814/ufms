@@ -1,0 +1,65 @@
+/*
+ * UFMS - responsive rules (tablet + phone). Sirf SCREEN ke liye: print / PDF par in ka koi asar nahi.
+ * < 992px : admin sidebar ki jagah top bar + offcanvas menu (includes/admin_sidebar.php), 44px tap targets, 16px inputs,
+ *           topnav ke buttons hamburger dropdown mein (includes/topnav.php)
+ * < 768px : tables mein kam zaroori columns chhup jate hain, modals poori chaurai
+ * Tables: scroll hamesha card ke andar (.table-responsive); .sticky-first = pehla column apni jagah rehta hai.
+ */
+@media screen {
+    /* Admin offcanvas menu (mobile) - sidebar jaisa hi look */
+    .admin-offcanvas { --bs-offcanvas-width: 270px; background: var(--primary-color, #1e3a8a); color: #fff; }
+    .admin-offcanvas .nav-link { color: rgba(255, 255, 255, .85); padding: 14px 20px; border-bottom: 1px solid rgba(255, 255, 255, .05); }
+    .admin-offcanvas .nav-link:hover, .admin-offcanvas .nav-link.active { background: rgba(255, 255, 255, .12); color: #fff; }
+    .admin-offcanvas .text-warning { color: #ffc107 !important; }
+    .admin-topbar { background: var(--primary-color, #1e3a8a); }
+
+    /* Wide tables: pehla column chipka rehta hai jab table daen-baen scroll ho */
+    .table-responsive { -webkit-overflow-scrolling: touch; }
+}
+
+/* Chhoti laptop / tablet (< 1200px): chauri tables card ke andar scroll hoti hain, pehla column apni jagah rehta hai */
+@media screen and (max-width: 1199.98px) {
+    .table-responsive > .table.sticky-first > :not(caption) > tr > :first-child:not([colspan]) {
+        position: sticky; left: 0; z-index: 2; box-shadow: 1px 0 0 rgba(15, 23, 42, .12), inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg, transparent)));
+    }
+    .table-responsive > .table.sticky-first > thead > tr > :first-child:not([colspan]) { z-index: 3; }
+}
+
+@media screen and (max-width: 991.98px) {
+    .main-content { margin-left: 0; padding: 15px; }
+
+    /* Tap targets kam az kam 44px; fields 16px (iPhone zoom nahi karta) */
+    .btn, .page-link { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; }
+    .btn.w-100, .btn.d-block { display: flex; }
+    .btn-close { box-sizing: border-box; width: 44px; height: 44px; }
+    .form-control, .form-select, .input-group-text, .dropdown-item { min-height: 44px; }
+    .dropdown-item { display: flex; align-items: center; }
+    textarea.form-control { min-height: 88px; }
+    .form-control, .form-select, .form-control-sm, .form-select-sm, input, select, textarea { font-size: 16px; }
+    .form-check-input { width: 1.25em; height: 1.25em; }
+    .form-check-label { padding-left: .25rem; }
+    .navbar-brand { min-width: 0; }
+
+    .table-responsive > .table.sticky-first > :not(caption) > tr > :first-child:not([colspan]) {
+        position: sticky; left: 0; z-index: 2; box-shadow: 1px 0 0 rgba(15, 23, 42, .12), inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg, transparent)));
+    }
+    .table-responsive > .table.sticky-first > thead > tr > :first-child:not([colspan]) { z-index: 3; }
+}
+
+@media screen and (max-width: 767.98px) {
+    /* Phones: kam zaroori columns chhupao (raqam / totals wale kabhi nahi). Table par class hide-xs-N = Nth column */
+    .table.hide-xs-2 > :not(caption) > tr > :nth-child(2):not([colspan]),
+    .table.hide-xs-3 > :not(caption) > tr > :nth-child(3):not([colspan]),
+    .table.hide-xs-4 > :not(caption) > tr > :nth-child(4):not([colspan]),
+    .table.hide-xs-5 > :not(caption) > tr > :nth-child(5):not([colspan]),
+    .table.hide-xs-6 > :not(caption) > tr > :nth-child(6):not([colspan]) { display: none; }
+
+    /* Modals aur forms: poori chaurai, footer buttons barabar */
+    .modal-dialog { margin: .5rem; max-width: none; }
+    .modal-footer { flex-wrap: nowrap; }
+    .modal-footer > .btn { flex: 1 1 0; }
+    .card.p-4, .card-body.p-4 { padding: 1rem !important; }
+}
+
+/* Print: voucher table ka scroll wrapper sirf screen ke liye hai - print mein pehle jaisa (koi scrollbar / clipping nahi) */
+@media print { .table-responsive.screen-scroll-only { overflow: visible !important; } }

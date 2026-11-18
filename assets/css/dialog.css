@@ -1,0 +1,37 @@
+/*
+ * UFMS - ek hi confirm dialog theme (SweetAlert2 customClass). Helper: UFMS.confirm() / UFMS.dialog() in assets/js/ui.js
+ * Compact card, app font, 14px radius, soft shadow, blurred backdrop, chhota gol icon action ke rang mein,
+ * buttons daen taraf (Cancel pehle). Logout, delete, pay, unlock, session timeout - sab yahi use karte hain.
+ */
+@keyframes ufmsDlgIn  { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+@keyframes ufmsDlgOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(.96); } }
+
+.swal2-container.ufms-dlg-backdrop { padding: 1rem; background: rgba(15, 23, 42, .45) !important;
+                                     -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.swal2-popup.ufms-dlg { width: min(420px, 92vw); max-width: 420px; padding: 1.5rem; border-radius: 14px; font-family: inherit;
+                        background: #fff; color: #1f2937; box-shadow: 0 20px 50px rgba(15, 23, 42, .25); }
+.swal2-popup.ufms-dlg-in  { animation: ufmsDlgIn .16s ease-out both; }
+.swal2-popup.ufms-dlg-out { animation: ufmsDlgOut .12s ease-in both; }
+
+/* Chhota gol icon, halka rangeen daira */
+.ufms-dlg .swal2-icon.ufms-dlg-icon { width: 44px; height: 44px; margin: 0 0 .9rem; border: 0; border-radius: 50%; justify-self: start;
+                                      display: flex; align-items: center; justify-content: center; animation: none; }
+.ufms-dlg .swal2-icon.ufms-dlg-icon .swal2-icon-content { font-size: 1.05rem; line-height: 1; display: flex; }
+.ufms-dlg .ufms-dlg-danger,
+.ufms-dlg .ufms-dlg-logout  { background: #fde8ea; color: #b02a37; }
+.ufms-dlg .ufms-dlg-success { background: #e1f3e8; color: #146c43; }
+.ufms-dlg .ufms-dlg-info    { background: #e2ecfd; color: #0b5ed7; }
+.ufms-dlg .ufms-dlg-warning { background: #fff1cc; color: #8a5a00; }
+
+.ufms-dlg .swal2-title { padding: 0; margin: 0; text-align: left; font-size: 1.15rem; font-weight: 700; line-height: 1.35; color: #111827; }
+.ufms-dlg .swal2-html-container { padding: 0; margin: .4rem 0 0; text-align: left; font-size: .92rem; line-height: 1.5; color: #4b5563; }
+.ufms-dlg .swal2-actions { width: 100%; padding: 0; margin: 1.35rem 0 0; justify-content: flex-end; gap: .5rem; flex-wrap: wrap; }
+.ufms-dlg .swal2-actions .btn { margin: 0; min-width: 96px; font-weight: 600; }
+/* Cancel: halka / outline - focus mein bhi halka hi rehta hai (Bootstrap focus par hover wala rang lagata hai) */
+.ufms-dlg .swal2-actions .swal2-cancel.btn { --bs-btn-color: #374151; --bs-btn-bg: #fff; --bs-btn-border-color: #cbd5e1;
+    --bs-btn-hover-color: #111827; --bs-btn-hover-bg: #f1f5f9; --bs-btn-hover-border-color: #94a3b8;
+    --bs-btn-active-color: #111827; --bs-btn-active-bg: #e2e8f0; --bs-btn-active-border-color: #94a3b8; }
+.ufms-dlg .swal2-actions .btn:focus-visible { outline: 2px solid #1e3a8a; outline-offset: 2px; box-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) { .swal2-popup.ufms-dlg-in, .swal2-popup.ufms-dlg-out { animation: none; } }
+@media print { .swal2-container { display: none !important; } }

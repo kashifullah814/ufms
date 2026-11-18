@@ -1,0 +1,13 @@
+# UFMS: hidden files aur folders (.git, .gitignore, .env, .claude ...) browser se kabhi na khulen -> 403
+<IfModule mod_alias.c>
+    RedirectMatch 403 "(^|/)\.(?!well-known/)"
+    # Project documents (README, CLAUDE.md, docs/) sirf developers ke liye hain
+    RedirectMatch 403 "(?i)/docs(/|$)"
+    RedirectMatch 403 "(?i)\.(md|sql|sh|log|bak|ini)$"
+</IfModule>
+
+# Folder ki file list kabhi na dikhe
+Options -Indexes
+
+# Ghalat address par UFMS ka apna page (project /ufms_project mein hai; folder ka naam badle to yeh line bhi badlein)
+ErrorDocument 404 /ufms_project/404.php

@@ -1,0 +1,14 @@
+# Uploaded files browser se direct nahi khul sakte (sirf view_receipt.php ke zariye, login ke baad)
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Deny from all
+</IfModule>
+# Agar kabhi access khula bhi ho to PHP files yahan execute na hon
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>

@@ -1,0 +1,125 @@
+/*
+ * UFMS - shared animations (pure CSS, halka aur tez). includes/header.php se load hota hai; JS: assets/js/ui.js
+ * - body.ui-enter: page load par ek dafa wali animations (content ka 150ms fade, landing cards) (ui.js baad mein class hata deta hai, taake PDF capture saaf rahe)
+ * - body.no-anim : print pages (voucher, receipt, salary slip) - koi animation nahi
+ * - prefers-reduced-motion aur @media print: sab band (file ke aakhir mein)
+ */
+
+@keyframes uiFade   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes uiFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes uiZoomIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+@keyframes uiZoomOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(.94); } }
+
+/* ---------- All pages: sirf content area ka halka (150ms) fade ----------
+ * body / background par kabhi animation nahi (warna har page par safed flash aata hai); sidebar aur navbar bhi foran dikhte hain. */
+body.ui-enter .main-content, body.ui-enter > .container, body.ui-enter .auth-shell { animation: uiFade .15s ease-out both; }
+
+/* ---------- Buttons ---------- */
+.btn { transition: transform .15s ease, box-shadow .2s ease, filter .2s ease, background-color .2s ease, border-color .2s ease, color .2s ease; }
+.btn:not(:disabled):not(.disabled):hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(15, 23, 42, .12); }
+.btn:not(:disabled):not(.disabled):active { transform: translateY(0) scale(.98); box-shadow: none; }
+.btn-close:hover, .btn-link:hover { transform: none !important; box-shadow: none !important; }
+
+/* ---------- Bootstrap modals: smooth zoom (confirm dialogs: assets/css/dialog.css) ---------- */
+.modal.fade .modal-dialog { transform: scale(.94); transition: transform .25s ease-out; }
+.modal.show .modal-dialog { transform: none; }
+
+/* ---------- Tables: row highlight on hover ---------- */
+.table > tbody > tr { transition: background-color .15s ease; }
+.table > tbody > tr:hover > * { --bs-table-bg-state: rgba(30, 58, 138, .05); }
+
+/* ---------- Admin sidebar links ---------- */
+.sidebar .nav-link { transition: padding-left .2s ease, background-color .2s ease, color .2s ease; }
+.sidebar .nav-link:hover { padding-left: 27px; }
+
+/* ---------- Cards ---------- */
+.stat-card, .table-card, .form-card { transition: transform .25s ease, box-shadow .25s ease; }
+.stat-card:hover { box-shadow: 0 10px 24px rgba(15, 23, 42, .10); }
+
+/* ---------- Portal landing page: cards one after another, hover lift ---------- */
+body.ui-enter .landing-cards .portal-card { animation: uiFadeUp .5s ease-out both; }
+body.ui-enter .landing-cards .row > :nth-child(1) .portal-card { animation-delay: .10s; }
+body.ui-enter .landing-cards .row > :nth-child(2) .portal-card { animation-delay: .20s; }
+body.ui-enter .landing-cards .row > :nth-child(3) .portal-card { animation-delay: .30s; }
+body.ui-enter .landing-cards .row > :nth-child(4) .portal-card { animation-delay: .40s; }
+.portal-card { transition: transform .25s ease, box-shadow .25s ease; }
+.portal-card:hover { transform: translateY(-8px); box-shadow: 0 18px 38px rgba(15, 23, 42, .18); }
+.portal-card .p-icon { transition: transform .25s ease; }
+.portal-card:hover .p-icon { transform: scale(1.08); }
+
+/* ---------- Login / Forgot Password: classic sliding sign-in card (includes/auth_panel.php) ----------
+ * .auth-card   : safed card, overflow:hidden + border-radius (shadow sirf isi par)
+ * .form-box    : aadhi chaurai. Login baen; Forgot usi jagah us ke neeche (opacity 0). .show-forgot par dono daen slide.
+ * .overlay-box : daen aadha, overflow:hidden. Us ke andar .overlay (200% chaura, portal gradient) ulti taraf slide hota hai,
+ *                is liye rang hamesha poora aadha card dhaanpta hai aur dono text panels apni apni jagah rehte hain.
+ * Sab transitions: transform .6s cubic-bezier(.65,0,.35,1). Koi extra layer, inner shadow ya border nahi.
+ */
+.auth-shell { width: min(860px, 92vw); margin: 0 auto; }
+.auth-card { position: relative; width: 100%; overflow: hidden; border-radius: 16px; background: #fff;
+             box-shadow: 0 14px 40px rgba(15, 23, 42, .14); }
+.form-box { padding: 2rem 1.5rem; }
+.auth-icon { width: 72px; height: 72px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+             background: var(--pc, #1e3a8a); color: #fff; }
+.auth-btn { background: var(--pc, #1e3a8a); color: #fff; }
+.auth-btn:hover, .auth-btn:focus { background: var(--pc, #1e3a8a); color: #fff; filter: brightness(1.12); }
+.overlay-box { display: none; }
+
+/* Mobile (< 768px): overlay nahi; ek waqt mein ek form, simple fade */
+@media (max-width: 767.98px) {
+    .auth-shell { width: min(440px, 92vw); }
+    .auth-card { border-top: 5px solid var(--pc, #1e3a8a); }
+    .auth-card .forgot-box { display: none; }
+    .auth-card.show-forgot .forgot-box { display: block; }
+    .auth-card.show-forgot .login-box { display: none; }
+    .auth-card.auth-anim .form-box { animation: uiFade .3s ease-out both; }
+}
+
+/* Desktop / tablet: classic sliding overlay */
+@media (min-width: 768px) {
+    .auth-card { min-height: 520px; }
+    .form-box { top: 0; width: 50%; padding: 2.25rem 2.5rem; display: flex; flex-direction: column; justify-content: center;
+                transition: transform .6s cubic-bezier(.65, 0, .35, 1), opacity .3s; }
+    /* Login box flow mein rehta hai (left:0, 50%) taake card us ki height le - form kabhi kat-ta nahi */
+    .login-box { position: relative; left: 0; min-height: 520px; z-index: 2; }
+    .forgot-box { position: absolute; left: 0; height: 100%; z-index: 1; opacity: 0; }
+
+    .overlay-box { display: block; position: absolute; top: 0; left: 50%; width: 50%; height: 100%; overflow: hidden; z-index: 10;
+                   transition: transform .6s cubic-bezier(.65, 0, .35, 1); }
+    .overlay { position: relative; left: -100%; width: 200%; height: 100%; color: #fff;
+               background: var(--portal-gradient, #1e3a8a);
+               transition: transform .6s cubic-bezier(.65, 0, .35, 1); }
+    .overlay-panel { position: absolute; top: 0; width: 50%; height: 100%; padding: 2.5rem;
+                     display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .panel-left { left: 0; }
+    .panel-right { right: 0; }
+    /* Information panel: logo + text; warning note panel ke neeche */
+    .overlay-logo { width: 76px; height: 76px; border-radius: 50%; background: rgba(255, 255, 255, .15); display: inline-flex; align-items: center; justify-content: center; overflow: hidden; }
+    .overlay-logo.has-img { background: #fff; padding: 6px; }
+    .overlay-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+    .overlay-note { position: absolute; left: 1.5rem; right: 1.5rem; bottom: 1.25rem; color: #fff; }
+
+    .auth-card.show-forgot .login-box   { transform: translateX(100%); opacity: 0; }
+    .auth-card.show-forgot .forgot-box  { transform: translateX(100%); opacity: 1; z-index: 5; }
+    .auth-card.show-forgot .overlay-box { transform: translateX(-100%); }
+    .auth-card.show-forgot .overlay     { transform: translateX(50%); }
+    /* Chhupa hua form click nahi hota (keyboard ke liye inert attribute ui.js lagata hai) */
+    .auth-card:not(.show-forgot) .forgot-box, .auth-card.show-forgot .login-box { pointer-events: none; }
+}
+
+/* ---------- Print pages / printing / reduced motion: NO animations ---------- */
+body.no-anim, body.no-anim *, body.no-anim *::before, body.no-anim *::after { animation: none !important; transition: none !important; }
+body.no-anim .btn:hover, body.no-anim .btn:active { transform: none !important; box-shadow: none !important; }
+body.no-anim .table > tbody > tr:hover > * { --bs-table-bg-state: initial; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .btn:hover, .btn:active, .portal-card:hover, .portal-card:hover .p-icon { transform: none !important; }
+    .sidebar .nav-link:hover { padding-left: 20px; }
+}
+
+@media print {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    body, body.ui-enter { opacity: 1 !important; }
+    .btn, .portal-card, .stat-card { transform: none !important; box-shadow: none !important; }
+    .table > tbody > tr:hover > * { --bs-table-bg-state: initial; }
+}
