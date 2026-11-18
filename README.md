@@ -7,6 +7,25 @@ expenses, grants, double-entry vouchers, trial balance and budgets, with four se
 Built with PHP (7.4 / 8.x) + MySQL/MariaDB, Bootstrap 5, SweetAlert2, Chart.js, html2pdf and PHPMailer.
 Runs on XAMPP/WAMP.
 
+## Screenshots
+
+All screenshots use demo data only.
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/01-login.png" alt="Administration login page"><br><b>Login</b> – one login system with a separate page for each portal</td>
+    <td width="50%"><img src="docs/screenshots/02-admin-dashboard.png" alt="Admin dashboard"><br><b>Admin dashboard</b> – totals, security status, budget alerts, monthly chart and activity log</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/03-fee-voucher.png" alt="Receipt voucher for a fee payment"><br><b>Fee receipt voucher</b> – double-entry voucher posted automatically when a fee is collected</td>
+    <td width="50%"><img src="docs/screenshots/04-payroll.png" alt="Staff payroll page"><br><b>Payroll</b> – monthly salary summary by employment type, paid and pending</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/05-budget.png" alt="Budget utilization report"><br><b>Budget utilization</b> – budget vs actual for every head, with Warning (80%) and Exceeded (100%) alerts</td>
+    <td width="50%"><img src="docs/screenshots/06-trial-balance.png" alt="Trial balance report"><br><b>Trial balance</b> – opening, period and closing balances; total debit equals total credit</td>
+  </tr>
+</table>
+
 ---
 
 ## 1. What you can do
